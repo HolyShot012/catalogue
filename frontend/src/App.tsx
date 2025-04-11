@@ -16,16 +16,18 @@ import Contact from './components/Contact';
 const App: React.FC = () => {
   return (
     <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/gioi-thieu" element={<AboutUS />} />
-        <Route path="/san-pham" element={<Products />} />
-        <Route path="/csbh" element={<CSBH />} />
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/lien-he" element={<Contact />} />
-      </Routes>
-      <Footer />
+      <div className="app">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/gioi-thieu" element={<AboutUS />} />
+          <Route path="/san-pham" element={<Products />} />
+          <Route path="/csbh" element={<CSBH />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/lien-he" element={<Contact />} />
+        </Routes>
+        <Footer />
+      </div>
     </Router>
   )
 };
