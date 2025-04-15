@@ -78,7 +78,7 @@ const AboutUsComponent2: React.FC = () => {
     return (
         <section className="min-h-screen h-full">
             <div className="relative w-full h-[40vh] md:h-[60vh] bg-black/50 bg-[url('/path-to-your-image.jpg')] bg-cover bg-center bg-blend-overlay">
-                <h1 className='absolute left-1/2 top-1/2 md:top-1/3 text-center transform -translate-x-1/2 -translate-y-1/2 text-white text-5xl font-bold uppercase'>
+                <h1 className='absolute left-1/2 top-1/2 md:top-1/3 text-center transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl sm:text-5xl   font-bold uppercase'>
                     Our achievement</h1>
             </div>
             <div className='relative w-full h-[fit] '>

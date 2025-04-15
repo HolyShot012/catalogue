@@ -13,7 +13,20 @@ const Contact: React.FC = () => {
         </main>
     );
 };
-
+const input = [
+    {
+        label: "Fullname",
+        type: "text",
+    },
+    {
+        label: "Email address",
+        type: "email",
+    },
+    {
+        label: "Phone",
+        type: "tel",
+    }
+]
 const ContactComponent1: React.FC = () => {
     return (
         <section className="grid grid-cols-1 md:grid-cols-3 mb-8">
@@ -29,29 +42,9 @@ const ContactComponent1: React.FC = () => {
             <div className="p-10 md:col-span-2">
                 <h2 className="text-3xl font-bold mb-6">Get in touch</h2>
                 <form className="space-y-4">
-                    <label className="block mb-1 text-sm font-bold text-[#05060f99] group-hover:text-[#05060fc2] transition-colors duration-300">
-                        Fullname
-                    </label>
-                    <input
-                        type="text"
-                        className="w-full h-11 px-4 text-base bg-[#05060f0a] rounded-lg border-2 border-transparent focus:border-[#05060f] hover:border-[#05060f] transition-all duration-300"
-                    />
-
-                    <label className="block mb-1 text-sm font-bold text-[#05060f99] group-hover:text-[#05060fc2] transition-colors duration-300">
-                        Email address
-                    </label>
-                    <input
-                        type="email"
-                        className="w-full h-11 px-4 text-base bg-[#05060f0a] rounded-lg border-2 border-transparent focus:border-[#05060f] hover:border-[#05060f] transition-all duration-300"
-                    />
-
-                    <label className="block mb-1 text-sm font-bold text-[#05060f99] group-hover:text-[#05060fc2] transition-colors duration-300">
-                        Phone
-                    </label>
-                    <input
-                        type="tel"
-                        className="w-full h-11 px-4 text-base bg-[#05060f0a] rounded-lg border-2 border-transparent focus:border-[#05060f] hover:border-[#05060f] transition-all duration-300"
-                    />
+                    {input.map((item, index) => (
+                        <ContactComponent1Input key={index} label={item.label} type={item.type} />
+                    ))}
 
                     <label className="block mb-1 text-sm font-bold text-[#05060f99] group-hover:text-[#05060fc2] transition-colors duration-300">
                         Message
@@ -69,20 +62,38 @@ const ContactComponent1: React.FC = () => {
         </section>
     )
 }
+interface ContactComponent1InputProps {
+    label: string;
+    type: string;
+
+}
+const ContactComponent1Input: React.FC<ContactComponent1InputProps> = ({ label, type }) => {
+    return (
+        <>
+            <label className="block mb-1 text-sm font-bold text-[#05060f99] group-hover:text-[#05060fc2] transition-colors duration-300">
+                {label}
+            </label>
+            <input
+                type={type}
+                className="w-full h-11 px-4 text-base bg-[#05060f0a] rounded-lg border-2 border-transparent focus:border-[#05060f] hover:border-[#05060f] transition-all duration-300"
+            /></>
+    )
+}
 interface ContactComponent1ItemProps {
     icon: React.ComponentType<{ size?: number | string; className?: string }>;
     text: string;
 }
 const ContactComponent1Item: React.FC<ContactComponent1ItemProps> = ({ icon: Icon, text }) => {
     return (
-        <li className="flex items-center gap-2 mb-3 p-5">
-            <div className="flex justify-center items-center w-fit h-fit p-4 border border-white rounded-full">
+        <li className="flex items-start  md:items-center gap-4 mb-8">
+            <div className="flex-shrink-0 flex justify-center items-center w-fit h-fit p-3 md:p-4 border border-white rounded-full">
                 <Icon size={20} />
             </div>
-            <span className='text-[1.1rem]'>{text}</span>
+            <span className='text-[1.1rem] break-words'>{text}</span>
         </li>
     );
 }
+
 const ContactComponent2: React.FC = () => {
     return (
         <section className="h-fit w-full p-5">

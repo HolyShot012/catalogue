@@ -47,13 +47,7 @@ const validateQueryParams = (req: QueryRequest, res: Response, next: NextFunctio
     req.queryParams = queryParams;
     next();
 }
-const validateCreateItem = (req: Request, res: Response, next: NextFunction) => {
-    const { name, description, image } = req.body;
-    if (!name || !description || !image) {
-        return res.status(400).json({ error: 'Missing required fields' });
-    }
-    next();
-}
+
 const validateItem = (req: Request, res: Response, next: NextFunction) => {
     const { name, description, image } = req.body;
     if (!name || !description || !image) {
@@ -65,8 +59,17 @@ const validateItem = (req: Request, res: Response, next: NextFunction) => {
 
     next();
 }
+
+const validateId = (req: Request, res: Response, next: NextFunction) => {
+    const id = parseInt(req.params.id);
+    if (isNaN(id) || !Number.isInteger(id) || id <= 0) {
+        return res.status(400).json({ error: 'Invalid ID' });
+    }
+
+    next();
+}
 export {
     validateQueryParams,
-    validateCreateItem,
+    validateId,
     validateItem
 };

@@ -92,11 +92,20 @@ const updateItem = (id: number, { name, description, image }: { name: string, de
     mockData[index] = { id, name, description, image: image || mockData[index].image };
     return mockData[index];
 }
+const deleteItemById = (id: number): boolean => {
+    const index = mockData.findIndex(i => i.id === id);
+    if (index === -1) {
+        return false;
+    }
+    mockData = mockData.filter((i => i.id !== id));
+    return true;
+}
 export {
     Item,
     QueryParams,
     createItem,
     updateItem,
+    deleteItemById,
     getItems
 }
 
