@@ -1,9 +1,39 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface FooterProps {
     title: string;
-    links: string[];
+    links: {
+        title: string;
+        url: string;
+    }[];
 }
+const footerList = [
+    {
+        title: "Company",
+        links: [
+            { title: "Home", url: "/" },
+            { title: "Contact", url: "/lien-he" },
+            { title: "CSBH", url: "/csbh" },
+        ],
+    },
+    {
+        title: "About us",
+        links: [
+            { title: "Our story", url: "/gioi-thieu" },
+            { title: "Team", url: "/gioi-thieu" },
+            { title: "FAQ", url: "/faq" },
+        ],
+    },
+    {
+        title: "Products",
+        links: [
+            { title: "Product 1", url: "/product-1" },
+            { title: "Product 2", url: "/product-2" },
+            { title: "Product 3", url: "/product-3" },
+        ],
+    },
+]
 const FooterComponent: React.FC<FooterProps> = ({ title, links }) => {
     return (
         <div>
@@ -11,7 +41,7 @@ const FooterComponent: React.FC<FooterProps> = ({ title, links }) => {
             <ul className="space-y-2">
                 {links.map((link, index) => (
                     <li key={index}>
-                        <a href="#" className="hover:text-blue-600">{link}</a>
+                        <Link to={`${link.url}`} className="hover:text-blue-600">{link.title}</Link>
                     </li>
                 ))}
             </ul>
@@ -23,9 +53,9 @@ const FooterComponent: React.FC<FooterProps> = ({ title, links }) => {
 const Footer: React.FC = () => {
     return (
         <footer className="p-5 flex flex-wrap justify-around gap-2.5 bg-gray-100">
-            <FooterComponent title="Company" links={["Home", "Contact", "Careers"]} />
-            <FooterComponent title="About us" links={["Our story", "Team", "FAQ"]} />
-            <FooterComponent title="Products" links={["Product 1", "Product 2", "Product 3"]} />
+            {footerList.map((item, index) => (
+                <FooterComponent key={index} title={item.title} links={item.links} />
+            ))}
         </footer>
     );
 };
