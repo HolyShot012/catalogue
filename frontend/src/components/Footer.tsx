@@ -52,7 +52,7 @@ const FooterComponent: React.FC<FooterProps> = ({ title, links }) => {
 
 const Footer: React.FC = () => {
     return (
-        <footer className="p-5 flex flex-wrap justify-around gap-2.5 bg-gray-100">
+        <footer className="p-5 flex flex-wrap justify-around gap-2.5 bg-gray-100 z-20 ">
             {footerList.map((item, index) => (
                 <FooterComponent key={index} title={item.title} links={item.links} />
             ))}

@@ -1,44 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-interface Image {
-  filename: string;
-  path: string;
+import picture from "../assets/temp.png";
+import axios from "axios";
+interface Item {
+  id: number;
   name: string;
   description: string;
+  image: string;
 }
 
 const Home: React.FC = () => {
-  const [images, setImages] = useState<Image[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Item[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/images");
-        if (!response.ok) throw new Error("Failed to fetch images");
-        const data = await response.json();
-        setImages(data.slice(0, 3)); // Limit to 3 for featured section
+    axios
+      .get('http://localhost:3000/api/items?limit=6')
+      .then((res) => {
+        console.log('API Response:', res.data);
+        setProducts(res.data.data);
         setLoading(false);
-      } catch (err) {
-        setError("Unable to load featured parts. Please try again later.");
+      })
+      .catch((err) => {
+        console.error('API Error:', err);
+        setError('Failed to fetch products');
         setLoading(false);
-      }
-    };
-    fetchImages();
+      });
   }, []);
 
   return (
-    <main className="flex flex-col min-h-screen bg-gray-100">
+    <main className=" relative w-full left-0 top-0 flex flex-col min-h-screen bg-gray-100">
       {/* Hero Section */}
-      <section className="w-full bg-gradient-to-r from-gray-700 to-gray-900 text-white py-16 px-4 sm:px-6 lg:px-8 relative">
-        <div className="absolute inset-0 bg-black opacity-20"></div>
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Welcome to Our Car Parts Catalogue
+      <section className=" w-full bg-gradient-to-r h-screen  from-gray-700 to-gray-900 text-white py-16 px-4 sm:px-6 lg:px-8 ">
+
+        <div className=" w-full flex justify-center items-center flex-col  h-full ">
+          <h1 className="uppercase text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+            Welcome
           </h1>
-          <p className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto">
+          <p className="text-center sm:text-lg md:text-xl max-w-2xl mx-auto">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
@@ -52,7 +52,7 @@ const Home: React.FC = () => {
             {/* Image */}
             <div className="lg:w-1/2">
               <img
-                src="/company-intro.jpg"
+                src={picture}
                 alt="Company Introduction"
                 className="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-lg shadow-md"
                 onError={(e) => (e.currentTarget.src = "/fallback-image.jpg")}
@@ -86,34 +86,34 @@ const Home: React.FC = () => {
             <p className="text-center text-gray-600">Loading featured parts...</p>
           ) : error ? (
             <p className="text-center text-red-600">{error}</p>
-          ) : images.length === 0 ? (
+          ) : products.length === 0 ? (
             <p className="text-center text-gray-600">
               No featured parts available yet. Check back soon!
             </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {images.map((image) => (
+              {products.map((item) => (
                 <div
-                  key={image.filename}
+                  key={item.name}
                   className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105 relative group"
                 >
                   <img
-                    src={`http://localhost:5000${image.path}`}
-                    alt={image.name}
+                    src={item.image}
+                    alt={item.name}
                     className="w-full h-48 sm:h-56 object-cover"
                     onError={(e) => (e.currentTarget.src = "/fallback-image.jpg")}
                   />
-                  <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center opacity-0 group-hover:blur-xs cursor-pointer transition-opacity duration-300">
                     <p className="text-white text-center text-sm p-4">
-                      {image.description}
+                      {item.description}
                     </p>
                   </div>
                   <div className="p-4">
                     <h3 className="text-lg font-semibold text-gray-900">
-                      {image.name}
+                      {item.name}
                     </h3>
                     <p className="text-gray-600 text-sm mt-2">
-                      {image.description}
+                      {item.description}
                     </p>
                   </div>
                 </div>

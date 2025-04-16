@@ -34,8 +34,8 @@ for (let i = 1; i <= 100; i++) {
     mockData.push({
         id: i,
         name: `Item ${i}`,
-        description: `Description for item ${i + 1}`,
-        image: `http://localhost:3000/upload/temp.png`
+        description: `Description for item ${i}`,
+        image: `temp.png`
     });
 }
 
@@ -74,6 +74,7 @@ const getItems = (params: QueryParams): ItemResponse => {
         limit: limit
     }
 }
+const baseUrl = 'http://localhost:3000/upload/'
 const createItem = (name: string, description: string, image: string): Item => {
     const newItem = {
         id: nextId++,

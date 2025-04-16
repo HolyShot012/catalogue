@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import cors from "cors";
+const cors = require("cors");
 import fs from "fs/promises";
 import path from "path";
 

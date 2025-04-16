@@ -3,8 +3,9 @@ import { FaHome } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
+
     return (
-        <header className="flex justify-between items-center p-5">
+        <header className=" flex w-full justify-between items-center p-5 z-10">
             <div className="flex items-center gap-2.5">
                 <Link to="/" className="flex items-center gap-2.5 no-underline text-inherit">
                     <FaHome size={24} />
