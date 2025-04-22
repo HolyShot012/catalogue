@@ -12,9 +12,11 @@ import Products from './components/Products';
 import CSBH from './components/CSBH';
 import FAQ from './components/FAQ';
 import Contact from './components/Contact';
+import ProductDetails from './components/ProductDetails';
 
 const App: React.FC = () => {
   return (
+
     <Router>
       <div className="app">
         <Header />
@@ -23,6 +25,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/gioi-thieu" element={<AboutUS />} />
           <Route path="/san-pham" element={<Products />} />
+          <Route path="chi-tiet/:id" element={<ProductDetails />} />
           <Route path="/csbh" element={<CSBH />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/lien-he" element={<Contact />} />

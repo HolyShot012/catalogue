@@ -1,4 +1,4 @@
-//
+
 interface QueryParams {
     offset?: number;
     limit?: number;
@@ -8,7 +8,7 @@ interface QueryParams {
     };
     filter?: {
         field: string;
-        value: string;
+        value: string | number;
     }[];
 }
 //Item structure 
@@ -46,9 +46,9 @@ const getItems = (params: QueryParams): ItemResponse => {
     let result = [...mockData]; // Create a shallow copy of the mock data
 
     if (params.filter) {
-        result = result.filter(item => {
-            params.filter?.some(filter => item[filter.field as keyof Item] === filter.value)
-        });
+        result = result.filter(item =>
+            params.filter!.every(filter => item[filter.field as keyof Item] === filter.value)
+        );
     }
     if (params.sort) {
         const { field, order } = params.sort;
