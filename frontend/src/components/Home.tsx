@@ -2,12 +2,64 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import picture from "../assets/temp.png";
 import axios from "axios";
+import { FaStar } from "react-icons/fa";
+
 interface Item {
   id: number;
   name: string;
   description: string;
   image: string;
 }
+
+interface Review {
+  customerName: string;
+  rating: number;
+  reviewText: string;
+}
+
+const reviews: Review[] = [
+  {
+    customerName: "Nguyễn Văn A",
+    rating: 5,
+    reviewText: "Sản phẩm chất lượng, giá cả hợp lý. Tôi rất hài lòng với dịch vụ của Đại Lộc Phát!",
+  },
+  {
+    customerName: "Trần Thị B",
+    rating: 4,
+    reviewText: "Giao hàng nhanh, sản phẩm đúng mô tả. Sẽ tiếp tục ủng hộ trong tương lai.",
+  },
+  {
+    customerName: "Lê Minh C",
+    rating: 5,
+    reviewText: "Chất lượng tuyệt vời, đội ngũ hỗ trợ rất nhiệt tình. Rất đáng tin cậy!",
+  },
+  {
+    customerName: "Phạm Ngọc D",
+    rating: 4,
+    reviewText: "Sản phẩm tốt, nhưng thời gian giao hàng có thể cải thiện thêm.",
+  },
+];
+
+const CustomerReview: React.FC<Review> = ({ customerName, rating, reviewText }) => {
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-start gap-4 border border-gray-200 transition-transform duration-300 hover:scale-105">
+      {/* Customer Name */}
+      <h3 className="text-lg font-semibold text-gray-900">{customerName}</h3>
+      {/* Rating Stars */}
+      <div className="flex gap-1">
+        {[...Array(5)].map((_, index) => (
+          <FaStar
+            key={index}
+            size={20}
+            className={index < rating ? "text-yellow-400" : "text-gray-300"}
+          />
+        ))}
+      </div>
+      {/* Review Text */}
+      <p className="text-gray-600 text-sm leading-relaxed">{reviewText}</p>
+    </div>
+  );
+};
 
 const Home: React.FC = () => {
   const [products, setProducts] = useState<Item[]>([]);
@@ -30,17 +82,15 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <main className=" relative w-full left-0 top-0 flex flex-col min-h-screen bg-gray-100">
+    <main className="relative w-full left-0 top-0 flex flex-col min-h-screen bg-gray-100">
       {/* Hero Section */}
-      <section className=" w-full bg-gradient-to-r h-screen  from-gray-700 to-gray-900 text-white py-16 px-4 sm:px-6 lg:px-8 ">
-
-        <div className=" w-full flex justify-center items-center flex-col  h-full ">
+      <section className="w-full bg-gradient-to-r h-screen from-gray-700 to-gray-900 text-white py-16 px-4 sm:px-6 lg:px-8">
+        <div className="w-full flex justify-center items-center flex-col h-full">
           <h1 className="uppercase text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Welcome
+            Đại Lộc Phát
           </h1>
           <p className="text-center sm:text-lg md:text-xl max-w-2xl mx-auto">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Giá tận gốc, Sản phẩm chất lượng, Sản xuất theo nhu cầu
           </p>
         </div>
       </section>
@@ -61,17 +111,37 @@ const Home: React.FC = () => {
             {/* Text */}
             <div className="lg:w-1/2">
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-                About Our Company
+                Về chúng tôi
               </h2>
               <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur.
+                Đại Lộc Phát chuyên cung cấp đa dạng hơn 1000 mặt hàng phụ tùng ô tô 
+                như bơm nhớt, bơm nước, xi lanh, piston, séc măng, trục cam, trục cơ,
+                 miểng dên, ron bộ, nắp sinh hàn, ruột sinh hàn, valve và git... Chúng 
+                 tôi cam kết mang đến sản phẩm chất lượng cao, một số sản phẩm được bảo 
+                 hành lên đến 2 năm. Với phương châm "Lấy hàng tận gốc – Giá cả hợp lý 
+                 – Chất lượng đảm bảo", chúng tôi luôn nỗ lực đem đến cho khách hàng sự
+                  an tâm tuyệt đối trong từng sản phẩm.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Customer Reviews Section */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-100">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center">
+            Đánh giá khách hàng
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {reviews.map((review, index) => (
+              <CustomerReview
+                key={index}
+                customerName={review.customerName}
+                rating={review.rating}
+                reviewText={review.reviewText}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -80,15 +150,15 @@ const Home: React.FC = () => {
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 text-center">
-            Featured Car Parts
+            Phụ tùng bán chạy
           </h2>
           {loading ? (
-            <p className="text-center text-gray-600">Loading featured parts...</p>
+            <p className="text-center text-gray-600">Đang tải...</p>
           ) : error ? (
             <p className="text-center text-red-600">{error}</p>
           ) : products.length === 0 ? (
             <p className="text-center text-gray-600">
-              No featured parts available yet. Check back soon!
+              Chưa có sản phẩm, kiểm tra lại sau!
             </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -127,17 +197,16 @@ const Home: React.FC = () => {
       <section className="w-full bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-            Explore Our Full Range
+            Khám phá nhiều mặt hàng thêm
           </h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          Khám phá thêm nhiều phụ tùng xe hơi chất lượng, giúp xe bạn vận hành êm ái và an toàn. Bấm vào đây để xem toàn bộ danh mục sản phẩm!
           </p>
           <Link
             to="/san-pham"
             className="inline-block bg-gray-800 text-white px-6 py-3 rounded-md hover:bg-gray-900 transition-colors"
           >
-            Browse Catalogue
+            Xem thêm!
           </Link>
         </div>
       </section>

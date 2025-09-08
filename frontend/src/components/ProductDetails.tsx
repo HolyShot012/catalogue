@@ -16,7 +16,7 @@ const ProductDetails: React.FC = () => {
     if (!product) {
         return (
             <main className="h-full p-10 flex flex-col items-center justify-center bg-gray-100">
-                <h1 className="text-3xl font-bold mb-6">Product Details</h1>
+                <h1 className="text-3xl font-bold mb-6">Chi tiết sản phẩm</h1>
                 <div className="flex justify-center items-center h-64">
                     <div className="text-gray-600 text-lg">Product not found</div>
                 </div>
@@ -26,7 +26,7 @@ const ProductDetails: React.FC = () => {
 
     return (
         <main className="min-h-screen p-4 sm:p-10 bg-gray-100 flex flex-col items-center">
-            <h1 className="text-3xl font-bold mb-6">Product Details</h1>
+            <h1 className="text-3xl font-bold mb-6">Chi tiết sản phẩm</h1>
             <section className="flex flex-col sm:flex-row gap-6 sm:gap-10 w-full max-w-5xl">
                 <div className="w-full sm:w-1/2">
                     <div className="relative aspect-square max-w-md mx-auto">
@@ -39,18 +39,17 @@ const ProductDetails: React.FC = () => {
                 </div>
                 <div className="w-full sm:w-1/2 space-y-6">
                     <h2 className="text-2xl sm:text-3xl font-bold">{product.name}</h2>
-                    <p className="text-gray-600">Size: Product Size</p>
+                    <div>
+                        <h3 className="text-xl font-semibold mb-2">Mô tả</h3>
+                        <p className="text-gray-600">{product.description}</p>
+                    </div>
                     <Link
                         to="/lien-he"
                         className="inline-block bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
                     >
-                        Contact Us
+                        Liên hệ
                     </Link>
                 </div>
-            </section>
-            <section className="w-full max-w-5xl mt-10">
-                <h2 className="text-2xl font-bold mb-4">Description</h2>
-                <p className="text-gray-600">{product.description}</p>
             </section>
         </main>
     );

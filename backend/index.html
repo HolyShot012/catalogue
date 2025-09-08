@@ -30,41 +30,51 @@
 
         <!-- Add Item Form -->
         <div class="bg-white p-6 rounded shadow mb-6">
-            <h2 class="text-2xl font-bold mb-4">Add New Item</h2>
+            <h2 class="text-2xl font-bold mb-4">Thêm sản phẩm</h2>
             <form id="add-form" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium">Name</label>
+                    <label class="block text-sm font-medium">Tên</label>
                     <input type="text" id="add-name" class="w-full p-2 border rounded" required>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium">Description</label>
+                    <label class="block text-sm font-medium">Mô tả</label>
                     <textarea id="add-description" class="w-full p-2 border rounded" required></textarea>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium">Image Name (optional)</label>
+                    <label class="block text-sm font-medium">Danh mục</label>
+                    <select id="add-category" class="w-full p-2 border rounded">
+                        <option value="">Chọn danh mục</option>
+                        <option value="Piston">Piston</option>
+                        <option value="Rings">Rings</option>
+                        <option value="Valves">Valves</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium">Tên hình (không bắt buộc)</label>
                     <input type="text" id="add-imageName" class="w-full p-2 border rounded">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium">Image File</label>
+                    <label class="block text-sm font-medium">File hình</label>
                     <input type="file" id="add-imageFile" name="imageFile" accept="image/*" class="w-full p-2">
                 </div>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add
-                    Item</button>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Thêm
+                    Sản phẩm</button>
             </form>
         </div>
 
         <!-- Items Table -->
         <div class="bg-white rounded shadow overflow-x-auto">
-            <h2 class="text-2xl font-bold p-4">Items</h2>
+            <h2 class="text-2xl font-bold p-4">Sản phẩm</h2>
             <div id="loading" class="text-center p-4">Loading items...</div>
             <table id="items-table" class="w-full hidden">
                 <thead>
                     <tr class="bg-gray-200">
                         <th class="p-2 text-left">ID</th>
-                        <th class="p-2 text-left">Name</th>
-                        <th class="p-2 text-left">Description</th>
-                        <th class="p-2 text-left">Image</th>
-                        <th class="p-2 text-left">Actions</th>
+                        <th class="p-2 text-left">Tên</th>
+                        <th class="p-2 text-left">Mô tả</th>
+                        <th class="p-2 text-left">Danh mục</th>
+                        <th class="p-2 text-left">Hình</th>
+                        <th class="p-2 text-left">Hành động</th>
                     </tr>
                 </thead>
                 <tbody id="items-body"></tbody>
@@ -113,13 +123,14 @@
                                 <td class="p-2">${item.id}</td>
                                 <td class="p-2" id="name-${item.id}">${item.name}</td>
                                 <td class="p-2" id="desc-${item.id}">${item.description}</td>
+                                <td class="p-2">${item.category || 'N/A'}</td>
                                 <td class="p-2">
                                     <img src="${item.image}" alt="${item.name}" class="h-16 w-16 object-cover rounded"
                                          onerror="this.src='https://via.placeholder.com/64'">
                                 </td>
                                 <td class="p-2 flex space-x-2">
-                                    <button onclick="startEditing(${item.id})" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600">Edit</button>
-                                    <button onclick="deleteItem(${item.id})" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Delete</button>
+                                    <button onclick="startEditing(${item.id})" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600">Chỉnh</button>
+                                    <button onclick="deleteItem(${item.id})" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Xóa</button>
                                 </td>
                             `;
                             tbody.appendChild(tr);
@@ -138,12 +149,14 @@
             e.preventDefault();
             const name = document.getElementById('add-name').value;
             const description = document.getElementById('add-description').value;
+            const category = document.getElementById('add-category').value;
             const imageName = document.getElementById('add-imageName').value;
             const imageFile = document.getElementById('add-imageFile').files[0];
 
             const formData = new FormData();
             formData.append('name', name);
             formData.append('description', description);
+            if (category) formData.append('category', category);
             if (imageFile) {
                 const extension = imageFile.name.split('.').pop();
                 const image = imageName ? `${imageName}.${extension}` : imageFile.name;
@@ -176,11 +189,21 @@
         function startEditing(id) {
             const nameCell = document.getElementById(`name-${id}`);
             const descCell = document.getElementById(`desc-${id}`);
+            const catCell = nameCell.parentElement.querySelector('td:nth-child(4)');
             const name = nameCell.textContent;
             const description = descCell.textContent;
+            const category = catCell.textContent;
 
             nameCell.innerHTML = `<input id="edit-name-${id}" value="${name}" class="w-full p-1 border rounded">`;
             descCell.innerHTML = `<textarea id="edit-desc-${id}" class="w-full p-1 border rounded">${description}</textarea>`;
+            catCell.innerHTML = `
+                <select id="edit-category-${id}" class="w-full p-1 border rounded">
+                    <option value="">Chọn danh mục</option>
+                    <option value="Piston" ${category === 'Piston' ? 'selected' : ''}>Piston</option>
+                    <option value="Rings" ${category === 'Rings' ? 'selected' : ''}>Rings</option>
+                    <option value="Valves" ${category === 'Valves' ? 'selected' : ''}>Valves</option>
+                </select>
+            `;
 
             const actionCell = nameCell.parentElement.querySelector('td:last-child');
             actionCell.innerHTML = `
@@ -194,12 +217,14 @@
         function saveEdit(id) {
             const name = document.getElementById(`edit-name-${id}`).value;
             const description = document.getElementById(`edit-desc-${id}`).value;
+            const category = document.getElementById(`edit-category-${id}`).value;
             const imageName = document.getElementById('add-imageName').value;
             const imageFile = document.getElementById('add-imageFile').files[0];
 
             const formData = new FormData();
             formData.append('name', name);
             formData.append('description', description);
+            if (category) formData.append('category', category);
             if (imageFile) {
                 const extension = imageFile.name.split('.').pop();
                 const image = imageName ? `${imageName}.${extension}` : imageFile.name;

@@ -25,11 +25,10 @@ const CSBH: React.FC = () => {
         {/* Header */}
         <header className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            CSBH Policies
+            Chính Sách Bảo Hành
           </h1>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Tại Đại Lộc Phát, chúng tôi xây dựng chính sách bảo hành rõ ràng và minh bạch để khách hàng yên tâm khi sử dụng sản phẩm.
           </p>
         </header>
 
@@ -152,17 +151,16 @@ const CSBH: React.FC = () => {
         {/* Contact Section */}
         <section className="mt-12 text-center">
           <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-4">
-            Have Questions?
+            Có câu hỏi?
           </h2>
           <p className="text-gray-700 text-sm sm:text-base mb-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Contact us
-            for more information about our policies.
+          Đừng ngần ngại liên hệ với chúng tôi, đội ngũ Đại Lộc Phát luôn sẵn sàng hỗ trợ bạn mọi lúc!
           </p>
           <Link
             to="/lien-he"
             className="inline-block bg-gray-800 text-white px-6 py-3 rounded-md hover:bg-gray-900 transition-colors"
           >
-            Contact Support
+            Liên hệ hỗ trợ
           </Link>
         </section>
       </div>

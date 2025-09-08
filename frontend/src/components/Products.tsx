@@ -8,6 +8,7 @@ interface Item {
     name: string;
     description: string;
     image: string;
+    category?: string;
 }
 
 const Products: React.FC = () => {
@@ -17,13 +18,25 @@ const Products: React.FC = () => {
     const [total, setTotal] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>(['All']); // Default to "All"
+
+    const categories = ['All', 'Piston', 'Rings', 'Valves'];
 
     useEffect(() => {
         setLoading(true);
         setError(null);
 
+        let url = `http://localhost:3000/api/items?offset=${offset}&limit=${limit}`;
+        if (selectedCategories.length > 0 && !selectedCategories.includes('All')) {
+            const categoryParams = selectedCategories
+                .filter(cat => cat !== 'All')
+                .map(cat => `category=${encodeURIComponent(cat)}`)
+                .join('&');
+            if (categoryParams) url += `&${categoryParams}`;
+        }
+
         axios
-            .get(`http://localhost:3000/api/items?offset=${offset}&limit=${limit}`)
+            .get(url)
             .then((res) => {
                 console.log('API Response:', res.data);
                 setTotal(res.data.total);
@@ -35,15 +48,41 @@ const Products: React.FC = () => {
                 setError('Failed to fetch products');
                 setLoading(false);
             });
-    }, [offset, limit]);
+    }, [offset, limit, selectedCategories]);
+
+    const handleCategoryChange = (category: string) => {
+        setSelectedCategories((prev) => {
+            if (category === 'All') {
+                return prev.includes('All') ? [] : ['All', 'Piston', 'Rings', 'Valves'];
+            }
+            const newCategories = prev.includes(category)
+                ? prev.filter((c) => c !== category)
+                : [...prev.filter((c) => c !== 'All'), category];
+            // Auto-select "All" if all categories are selected
+            const allSelected = ['Piston', 'Rings', 'Valves'].every(cat => newCategories.includes(cat));
+            return allSelected ? ['All'] : newCategories;
+        });
+        setOffset(0); // Reset offset when category changes
+    };
 
     return (
         <main className="h-full p-10 flex flex-col items-center justify-center bg-gray-100">
-            <h1 className="text-3xl font-bold mb-6">Products</h1>
+            <h1 className="text-3xl font-bold mb-6">Sản phẩm</h1>
             <section className="w-full flex gap-8">
-                <div className="flex-1 bg-white rounded-lg shadow-md p-6 max-h-[500px]">
-                    <h2 className="text-xl font-bold mb-4">Filters</h2>
-                    {/* Filter content can be added here */}
+                <div className="flex-1 bg-white rounded-lg shadow-md p-6 max-h-[500px] overflow-y-auto">
+                    <h2 className="text-xl font-bold mb-4">Phân loại</h2>
+                    {categories.map((category) => (
+                        <div key={category} className="flex items-center mb-2">
+                            <input
+                                type="checkbox"
+                                id={`category-${category}`}
+                                checked={selectedCategories.includes(category)}
+                                onChange={() => handleCategoryChange(category)}
+                                className="mr-2"
+                            />
+                            <label htmlFor={`category-${category}`}>{category}</label>
+                        </div>
+                    ))}
                 </div>
                 <div className="flex-3 flex flex-col">
                     {loading ? (
@@ -56,7 +95,7 @@ const Products: React.FC = () => {
                         </div>
                     ) : products.length === 0 ? (
                         <div className="flex justify-center items-center h-64">
-                            <div className="text-gray-300 text-lg">No products found</div>
+                            <div className="text-gray-300 text-lg">Không có sản phẩm!</div>
                         </div>
                     ) : (
                         <>
@@ -76,7 +115,7 @@ const Products: React.FC = () => {
                                                 state={{ product }}
                                                 className="mt-2 inline-block text-blue-500 hover:underline"
                                             >
-                                                View Details
+                                                Chi tiết
                                             </Link>
                                         </div>
                                     </div>

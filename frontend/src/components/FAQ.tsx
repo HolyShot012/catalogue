@@ -27,7 +27,7 @@ const FAQ: React.FC = () => {
                 <section className={`h-[47vh] w-full relative  bg-cover bg-center`} style={{ backgroundImage: `url(${picture})` }}>
                     <div className="absolute inset-0 bg-black opacity-20"></div>
                     <h1 className="absolute inset-0 flex items-center justify-center text-white text-4xl font-bold">
-                        FAQ
+                        Câu hỏi thường gặp
                     </h1>
 
                 </section>

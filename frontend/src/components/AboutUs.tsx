@@ -23,13 +23,13 @@ const AboutUS: React.FC = () => {
 export default AboutUS
 
 const AboutUsComponent1: React.FC = () => {
-    const list = ["Quality", "Customer", "Services", "Reliance"]
+    const list = ["Chất lượng", "Độ bền", "Tin cậy", "Phù hợp"]
     return (
         <>
             <section className="flex gap-5 justify-center  p-10 flex-wrap">
                 <div className=" md:w-[30rem] w-full ">
-                    <h1 className="font-bold text-[2.4rem]">About Us</h1>
-                    <p className="py-5 leading-relaxed text-[20px] text-[#666666]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam voluptates, quod, quia, voluptatibus quae voluptatem quos voluptatum quidem doloribus quas natus. Quisquam, quae. Quisquam voluptates, quod, quia, voluptatibus quae voluptatem quos.</p>
+                    <h1 className="font-bold text-[2.4rem]">Câu chuyện của chúng tôi</h1>
+                    <p className="py-5 leading-relaxed text-[20px] text-[#666666]">Công Ty Sản Xuất Thương Mại Đại Lộc Phát, hay còn được nhiều khách hàng quen gọi là Phụ Tùng Ô Tô Đại Lộc Phát, khởi nguồn từ một xưởng sản xuất nhỏ. Qua hơn 31 năm không ngừng nỗ lực và phát triển, chúng tôi đã vươn mình trở thành đơn vị vừa sản xuất vừa thương mại phụ tùng ô tô uy tín, chuyên phục vụ cho các dòng xe tải đến từ Trung Quốc, Nhật Bản, Hàn Quốc và nhiều thương hiệu khác. Mặc dù mới chính thức đăng ký kinh doanh gần đây, nhưng với bề dày kinh nghiệm thực tiễn, Đại Lộc Phát tự hào tiếp tục sứ mệnh đồng hành cùng khách hàng trên mọi chặng đường.</p>
                     <ul className="flex gap-4 justify-between items-center flex-wrap">
                         {list.map((item, index) => (
                             <AboutUsComponent1Item key={index} span={item} />
@@ -79,17 +79,15 @@ const AboutUsComponent2: React.FC = () => {
         <section className="min-h-screen h-full">
             <div className="relative w-full h-[40vh] md:h-[60vh] bg-black/50 bg-[url('/path-to-your-image.jpg')] bg-cover bg-center bg-blend-overlay">
                 <h1 className='absolute left-1/2 top-1/2 md:top-1/3 text-center transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl sm:text-5xl   font-bold uppercase'>
-                    Our achievement</h1>
+                    Thành tích</h1>
             </div>
             <div className='relative w-full h-[fit] '>
                 <div className=" md:absolute left-1/2 md:-translate-x-1/2 top-[-20vh] bg-white w-full max-w-9/10 mx-auto">
                     <div className="flex flex-col md:flex-row md:items-center  justify-center h-50vh  gap-8 p-4 sm:p-10">
                         <div className="md:max-w-[450px] w-full   h-full flex flex-col justify-between ">
-                            <h1 className="text-5xl font-bold">Results</h1>
-                            <p className="py-5 text-[20px] leading-relaxed text-[#666666]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, deserunt. um laboriosam repellendus beatae necessitatibus accusantium at dignissimos suscipit odio.</p>
-                            <button className="w-fit border border-blue-600 text-blue-600 px-6 py-2 rounded-md transition-all duration-200 ease-in hover:bg-blue-600 hover:text-white">
-                                Learn More
-                            </button>
+                            <h1 className="text-5xl font-bold">Kết quả</h1>
+                            <p className="py-5 text-[20px] leading-relaxed text-[#666666]">Phụ tùng xe của Đại Lộc Phát đã và đang khẳng định vị thế trên thị trường nhờ vào chất lượng vượt trội và độ tin cậy cao. Với hàng nghìn sản phẩm được cung cấp mỗi năm, chúng tôi tự hào góp phần nâng cao hiệu suất và độ bền cho hàng loạt phương tiện trên toàn quốc.</p>
+                            
                         </div>
                         <div className=" grid grid-cols-2 gap-6">
                             {results.map((item, index) => (
@@ -119,12 +117,9 @@ const AboutUsComponent3: React.FC = () => {
                 <img src={picture} alt="About Us" className="w-full h-full object-cover" />
             </div>
             <div className="w-full md:flex-1 mt-4 md:mt-0">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">About Our Company</h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">Định hướng phát triển</h2>
                 <p className="text-gray-600 leading-relaxed text-lg md:text-xl">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam voluptates,
-                    quod, quia, voluptatibus quae voluptatem quos voluptatum quidem doloribus quas
-                    natus. Quisquam, quae. Quisquam voluptates, quod, quia, voluptatibus quae
-                    voluptatem quos.
+                Đại Lộc Phát không ngừng mở rộng hệ thống phân phối và nâng cao chất lượng dịch vụ nhằm phục vụ khách hàng tốt hơn mỗi ngày. Chúng tôi hướng đến việc trở thành đơn vị hàng đầu trong lĩnh vực phụ tùng ô tô tại Việt Nam, đồng hành cùng sự phát triển bền vững của ngành giao thông vận tải.
                 </p>
             </div>
         </section>
