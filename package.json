@@ -8,7 +8,13 @@
     "frontend",
     "backend"
   ],
+  "scripts": {
+    "dev": "concurrently \"yarn --cwd frontend dev\" \"yarn --cwd backend start\""
+  },
   "dependencies": {
     "yarn": "^1.22.22"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }
